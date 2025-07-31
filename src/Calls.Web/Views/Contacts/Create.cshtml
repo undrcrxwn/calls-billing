@@ -1,0 +1,38 @@
+@using System.Globalization
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model CreateContactRequest
+
+<div class="container mx-auto mt-5 col-lg-6">
+    <h2 class="mb-4">Новый контакт</h2>
+    <form id="calculatePaymentsForm" method="post" class="row g-2">
+        <div class="col-sm-6">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" value="@Model.Name" class="form-control" placeholder="Иванов Иван Иванович"/>
+            <span asp-validation-for="Name" class="invalid-feedback d-block"></span>
+        </div>
+        <div class="col-sm-6">
+            <label asp-for="ChargePerMinute" class="form-label"></label>
+            <div class="input-group">
+                <input type="number" asp-for="ChargePerMinute" value="@Model.ChargePerMinute.ToString(CultureInfo.InvariantCulture)" step="0.01" class="form-control"/>
+                <span class="input-group-text">руб. в мин.</span>
+            </div>
+            <span asp-validation-for="ChargePerMinute" class="invalid-feedback d-block"></span>
+        </div>
+        <div class="col-sm-6">
+            <label asp-for="Email" class="form-label"></label>
+            <input type="email" asp-for="Email" value="@Model.Email" class="form-control" placeholder="sample@example.com"/>
+            <span asp-validation-for="Email" class="invalid-feedback d-block"></span>
+        </div>
+        <div class="col-sm-6">
+            <label asp-for="DateOfBirth" class="form-label"></label>
+            <input type="date" asp-for="DateOfBirth" class="form-control"/>
+            <span asp-validation-for="DateOfBirth" class="invalid-feedback d-block"></span>
+        </div>
+        <div class="d-flex justify-content-end align-items-center gap-2">
+            <a asp-action="Index">
+                <input type="button" class="btn btn-outline-danger" value="Отмена"/>
+            </a>
+            <input type="submit" class="btn btn-primary" value="Сохранить"/>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,45 @@
+@model IEnumerable<ContactResponse>
+
+<div class="container mx-auto mt-5">
+    <div class="d-flex gap-4 justify-content-between mb-4 align-items-center">
+        <h2>Контакты</h2>
+        <a asp-action="Create">
+            <button class="btn btn-primary">Добавить контакт</button>
+        </a>
+    </div>
+    <table class="table table-bordered table-sm text-center">
+        <thead class="table-light">
+        <tr>
+            <th>Имя</th>
+            <th>Почта</th>
+            <th>Дата рождения</th>
+            <th>Тариф</th>
+            <th>Количество номеров</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var contact in Model)
+        {
+            <tr>
+                <td class="align-content-center">@Html.DisplayFor(_ => contact.Name)</td>
+                <td class="align-content-center">@Html.DisplayFor(_ => contact.Email)</td>
+                <td class="align-content-center">@Html.DisplayFor(_ => contact.DateOfBirth)</td>
+                <td class="align-content-center">@Html.DisplayFor(_ => contact.ChargePerMinute) руб./мин.</td>
+                <td class="align-content-center">@Html.DisplayFor(_ => contact.PhoneNumbers.Count)</td>
+                <td class="d-flex gap-1">
+                    <a asp-action="Statistics" asp-route-id="@contact.Id" class="flex-grow-1">
+                        <button class="btn btn-outline-primary w-100">Статистика</button>
+                    </a>
+                    <a asp-action="Edit" asp-route-id="@contact.Id" class="flex-grow-1">
+                        <button class="btn btn-outline-primary w-100">Изменить</button>
+                    </a>
+                    <form method="post" asp-action="Delete" asp-route-id="@contact.Id" class="flex-grow-1">
+                        <button class="btn btn-outline-danger w-100">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

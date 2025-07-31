@@ -1,0 +1,30 @@
+@model ContactStatisticsRequest
+
+<div class="container mx-auto mt-5">
+    <h2 class="mb-4">Статистика</h2>
+    <form method="get" class="row g-2">
+        @Html.HiddenFor(_ => Model.Id)
+        <div class="col-6">
+            <label asp-for="Since" class="form-label"></label>
+            <input type="datetime-local" asp-for="Since" class="form-control"/>
+            <span asp-validation-for="Since" class="invalid-feedback d-block"></span>
+        </div>
+        <div class="col-6">
+            <label asp-for="Until" class="form-label"></label>
+            <input type="datetime-local" asp-for="Until" class="form-control"/>
+            <span asp-validation-for="Until" class="invalid-feedback d-block"></span>
+        </div>
+        <input type="submit" class="btn btn-primary col-sm-2 ms-auto" value="Обновить"/>
+    </form>
+    @if (Model.Statistics is not null)
+    {
+        <p>
+            Совершено исходящих звонков: <strong>@Html.DisplayFor(_ => Model.Statistics.CallsStarted)</strong><br/>
+            Суммарная длительность исходящих звонков: <strong>@Html.DisplayFor(_ => Model.Statistics.StartedCallDuration) мин.</strong><br/>
+            Средняя длительность исходящих звонков: <strong>@Html.DisplayFor(_ => Model.Statistics.AverageCallDuration) мин.</strong><br/>
+            Суммарная стоимость: <strong>@Html.DisplayFor(_ => Model.Statistics.TotalCharge) руб.</strong><br/>
+            Средняя стоимость: <strong>@Html.DisplayFor(_ => Model.Statistics.AverageCharge) руб.</strong><br/>
+            Входящих звонков: <strong>@Html.DisplayFor(_ => Model.Statistics.CallsJoined)</strong>
+        </p>
+    }
+</div>

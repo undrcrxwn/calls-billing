@@ -1,0 +1,79 @@
+@using System.Globalization
+@model UpdateContactRequest
+
+<div class="container mx-auto mt-5 col-lg-6">
+    <h2 class="mb-4">Изменение контакта</h2>
+    <form method="post" class="row g-2">
+        <div class="col-sm-6">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" value="@Model.Name" class="form-control" placeholder="Иванов Иван Иванович"/>
+            <span asp-validation-for="Name" class="invalid-feedback d-block"></span>
+        </div>
+        <div class="col-sm-6">
+            <label asp-for="ChargePerMinute" class="form-label"></label>
+            <div class="input-group">
+                <input type="number" asp-for="ChargePerMinute" value="@Model.ChargePerMinute.ToString(CultureInfo.InvariantCulture)" step="0.01" class="form-control"/>
+                <span class="input-group-text">руб. в мин.</span>
+            </div>
+            <span asp-validation-for="ChargePerMinute" class="invalid-feedback d-block"></span>
+        </div>
+        <div class="col-sm-6">
+            <label asp-for="Email" class="form-label"></label>
+            <input type="email" asp-for="Email" value="@Model.Email" class="form-control" placeholder="sample@example.com"/>
+            <span asp-validation-for="Email" class="invalid-feedback d-block"></span>
+        </div>
+        <div class="col-sm-6">
+            <label asp-for="DateOfBirth" class="form-label"></label>
+            <input type="date" asp-for="DateOfBirth" class="form-control"/>
+            <span asp-validation-for="DateOfBirth" class="invalid-feedback d-block"></span>
+        </div>
+        <h4 class="mt-4">Номера телефонов</h4>
+        <div>
+            <div id="phoneNumbers" class="d-flex flex-column gap-2">
+                @for (var i = 0; i < Model.PhoneNumbers.Count; i++)
+                {
+                    <div class="input-group">
+                        <input type="text" name="PhoneNumbers[@i]" value="@Model.PhoneNumbers[i]" class="form-control" placeholder="Номер телефона" disabled/>
+                        @Html.HiddenFor(model => model.PhoneNumbers[i])
+                        <button type="button" class="btn btn-outline-danger remove-phone-number">Удалить</button>
+                    </div>
+                }
+            </div>
+            <input type="button" id="addPhoneNumber" class="btn btn-outline-primary mt-2" value="Добавить номер"/>
+        </div>
+        <div class="d-flex justify-content-end align-items-center gap-2">
+            <a asp-action="Index">
+                <input type="button" class="btn btn-outline-danger" value="Отмена"/>
+            </a>
+            <input type="submit" class="btn btn-primary" value="Сохранить"/>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+    $(document).ready(function() {
+        function reindexPhoneNumbers() {
+            $('#phoneNumbers .input-group').each(function(i) {
+                $(this).find('input[name^="PhoneNumbers"]').attr('name', `PhoneNumbers[${i}]`);
+            });
+        }
+
+        $('#addPhoneNumber').on('click', function() {
+            const index = $('#phoneNumbers .input-group').length;
+            const html = `
+                <div class="input-group">
+                    <input type="text" name="PhoneNumbers[${index}]" class="form-control" placeholder="Номер телефона"/>
+                    <button type="button" class="btn btn-outline-danger remove-phone-number">Удалить</button>
+                </div>
+            `;
+            $('#phoneNumbers').append(html);
+        });
+
+        $(document).on('click', '.remove-phone-number', function() {
+            $(this).closest('.input-group').remove();
+            reindexPhoneNumbers();
+        });
+    });
+    </script>
+}

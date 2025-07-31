@@ -1,0 +1,23 @@
+@model CreateCallRequest
+
+<div class="container mx-auto mt-5 col-lg-6">
+    <h2 class="mb-4">Новый звонок</h2>
+    <form id="calculatePaymentsForm" method="post" class="row g-2">
+        <div class="col-sm-6">
+            <label asp-for="StarterPhoneNumber" class="form-label"></label>
+            <input type="tel" asp-for="StarterPhoneNumber" value="@Model.StarterPhoneNumber" class="form-control"/>
+            <span asp-validation-for="StarterPhoneNumber" class="invalid-feedback d-block"></span>
+        </div>
+        <div class="col-sm-6">
+            <label asp-for="ParticipantPhoneNumber" class="form-label"></label>
+            <input type="tel" asp-for="ParticipantPhoneNumber" value="@Model.ParticipantPhoneNumber" class="form-control"/>
+            <span asp-validation-for="ParticipantPhoneNumber" class="invalid-feedback d-block"></span>
+        </div>
+        <div class="d-flex justify-content-end align-items-center gap-2">
+            <a asp-action="Index">
+                <input type="button" class="btn btn-outline-danger" value="Отмена"/>
+            </a>
+            <input type="submit" class="btn btn-primary" value="Сохранить"/>
+        </div>
+    </form>
+</div>
