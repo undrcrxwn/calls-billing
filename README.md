@@ -1,6 +1,6 @@
 ## Запуск через .NET CLI
 
-`dotnet run --project src/LoanCalculator.Web`
+`dotnet run --project src/Calls.Web`
 
 Интерфейс: http://localhost:5000
 
@@ -8,8 +8,8 @@
 ## Запуск в Docker
 
 ```ps
-docker build -t loan-calculator .
-docker run --rm -it -p 8080:8080 loan-calculator
+docker build -t calls .
+docker run --rm -it -p 8080:8080 calls
 ```
 
 Интерфейс: http://localhost:8080
